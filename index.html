@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff7f4">
+<meta name="description" content="50 道选择题，测出你的男娘指数。纯属娱乐 🎀">
+<meta property="og:type" content="website">
+<meta property="og:title" content="男娘指数检测器 · 答题版 🎀">
+<meta property="og:description" content="50 道选择题，测出你的男娘指数。纯属娱乐。">
+<meta name="twitter:card" content="summary">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 56S12 44 12 30a11 11 0 0120-6 11 11 0 0120 6c0 14-20 26-20 26z' fill='%23ff8fb1' stroke='%233b2a3f' stroke-width='3'/%3E%3C/svg%3E">
+<title>男娘指数检测器 · 答题版 🎀</title>
+<style>
+  *{box-sizing:border-box}
+  :root{
+    --ink:#3b2a3f;
+    --ink-soft:#5d4a60;
+    --pink:#ff8fb1;
+    --lav:#b7a6ff;
+    --mint:#8fe3c8;
+    --accent:#ff8fb1;
+  }
+  html,body{height:100%}
+  body{
+    margin:0;min-height:100vh;padding:40px 18px 56px;
+    display:flex;justify-content:center;overflow-x:hidden;
+    color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    background:
+      radial-gradient(760px 520px at 10% -6%, #ffe3ec 0%, rgba(255,227,236,0) 62%),
+      radial-gradient(700px 500px at 94% 2%, #e8e2ff 0%, rgba(232,226,255,0) 60%),
+      radial-gradient(640px 520px at 50% 112%, #d9f6ec 0%, rgba(217,246,236,0) 62%),
+      #fffaf8;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:radial-gradient(circle, rgba(59,42,63,.07) 1px, transparent 1.4px);
+    background-size:20px 20px;
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.1));
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.1));
+  }
+  .blob{position:fixed;border-radius:50%;filter:blur(60px);opacity:.5;pointer-events:none;z-index:0}
+  .blob.b1{width:320px;height:320px;left:-110px;top:16%;background:#ffc8dc;animation:bob 12s ease-in-out infinite}
+  .blob.b2{width:300px;height:300px;right:-100px;bottom:8%;background:#cfc2ff;animation:bob 15s ease-in-out infinite reverse}
+  @keyframes bob{50%{transform:translateY(-24px) scale(1.05)}}
+
+  main{position:relative;z-index:1;width:100%;max-width:640px;display:flex;flex-direction:column;align-items:center}
+
+  header{text-align:center;margin-bottom:24px}
+  .sticker{
+    display:inline-block;padding:6px 14px;margin-bottom:14px;
+    font-size:10.5px;font-weight:800;letter-spacing:.16em;
+    background:#fff;border:2px solid var(--ink);border-radius:999px;
+    box-shadow:3px 3px 0 rgba(59,42,63,.16);transform:rotate(-1.5deg);
+  }
+  h1{
+    margin:0;font-size:clamp(26px,6vw,38px);line-height:1.2;font-weight:900;
+    color:var(--ink);text-shadow:2px 2px 0 #ffc2d6, 3px 3px 0 rgba(183,166,255,.5);
+  }
+  h1 .emoji{text-shadow:none;display:inline-block;transform:rotate(-6deg);font-size:.76em;vertical-align:-.05em}
+  .sub{margin:10px 0 0;font-size:13px;color:#8d7992;font-weight:700}
+
+  .card{
+    width:100%;padding:28px;background:#fff;
+    border:3px solid var(--ink);border-radius:28px;
+    box-shadow:8px 10px 0 rgba(59,42,63,.12);
+    opacity:1;transition:opacity .3s, transform .3s;
+  }
+  .card[hidden]{display:none}
+
+  /* ---------- intro ---------- */
+  .intro{text-align:center;padding:40px 28px}
+  .intro .icon{font-size:44px;line-height:1;margin-bottom:14px;display:block}
+  .intro h2{margin:0 0 10px;font-size:24px;font-weight:900}
+  .intro p{margin:0 auto 24px;max-width:400px;font-size:14px;line-height:1.8;color:var(--ink-soft);font-weight:500}
+  .meta{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+  .meta span{
+    font-size:11.5px;font-weight:800;color:#7a6580;
+    background:#fff5f9;border:1.5px solid #ffd6e3;border-radius:999px;padding:6px 12px;
+  }
+  .big-btn{
+    font:inherit;font-size:16px;font-weight:900;cursor:pointer;color:var(--ink);
+    padding:15px 40px;border:2px solid var(--ink);border-radius:16px;
+    background:linear-gradient(135deg,#ffb3cc,#ffd0de);
+    box-shadow:4px 4px 0 var(--ink);
+    transition:transform .12s, box-shadow .12s;
+  }
+  .big-btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+  .tiny{margin:18px 0 0;font-size:11.5px;color:#b09cab;font-weight:600}
+
+  /* ---------- quiz ---------- */
+  .quiz{padding:26px}
+  .q-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .icon-btn{
+    width:34px;height:34px;flex:none;display:grid;place-items:center;
+    font:inherit;font-size:16px;font-weight:900;color:var(--ink);cursor:pointer;
+    background:#fff;border:2px solid rgba(59,42,63,.18);border-radius:10px;
+    transition:border-color .15s, background .15s, opacity .15s;
+  }
+  .icon-btn:hover{border-color:var(--ink);background:#fff5f9}
+  .icon-btn:disabled{opacity:.35;cursor:default}
+  .q-count{font-size:12px;font-weight:800;color:#a08ba4;letter-spacing:.04em}
+  .q-count b{color:var(--ink);font-size:15px}
+  .q-count .of{color:#c3adc2}
+  .q-track{flex:1;height:9px;border-radius:999px;background:#f7eef3;border:1px solid rgba(59,42,63,.08);overflow:hidden;margin-left:4px}
+  .q-track i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#ffb3cc,#c9a7ff);transition:width .35s cubic-bezier(.16,1,.3,1)}
+
+  .q-text{
+    margin:22px 0 20px;font-size:21px;line-height:1.55;font-weight:900;letter-spacing:-.005em;
+    min-height:64px;
+  }
+  .options{display:flex;flex-direction:column;gap:10px}
+  .opt{
+    display:flex;align-items:center;gap:13px;width:100%;text-align:left;
+    font:inherit;font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.5;
+    padding:13px 15px;background:#fff;cursor:pointer;
+    border:2px solid rgba(59,42,63,.13);border-radius:14px;
+    transition:transform .12s, border-color .15s, background .15s, box-shadow .12s;
+  }
+  .opt:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:3px 4px 0 rgba(59,42,63,.14)}
+  .opt .key{
+    flex:none;width:26px;height:26px;display:grid;place-items:center;border-radius:8px;
+    font-size:11.5px;font-weight:900;color:#8d7992;background:#fbf2f7;border:1.5px solid #f0dae6;
+  }
+  .opt.picked{
+    border-color:var(--ink);background:#fff0f6;
+    box-shadow:3px 4px 0 rgba(59,42,63,.16);
+  }
+  .opt.picked .key{background:var(--pink);border-color:var(--ink);color:#fff}
+  .q-tip{margin:18px 0 0;font-size:11px;color:#c0adbf;font-weight:600;text-align:center}
+
+  /* ---------- result ---------- */
+  .result{padding:30px}
+  .r-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+  .r-tag{font-size:11px;font-weight:900;letter-spacing:.12em;color:#b49cb0}
+  .r-date{font-size:11.5px;font-weight:700;color:#b49cb0}
+  .r-main{display:flex;align-items:center;gap:26px;margin:14px 0 8px}
+  .gauge{position:relative;width:180px;height:180px;flex:none}
+  .gauge svg{display:block;width:100%;height:100%;overflow:visible}
+  .ring-dash{fill:none;stroke:rgba(59,42,63,.16);stroke-width:2;stroke-dasharray:2 8;stroke-linecap:round}
+  .track{fill:none;stroke:#f6ecf1;stroke-width:15}
+  .prog{fill:none;stroke:url(#candy);stroke-width:15;stroke-linecap:round;filter:drop-shadow(0 4px 10px rgba(255,143,177,.45))}
+  .gauge-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .num{font-size:50px;font-weight:900;line-height:1;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+  .num-sub{font-size:10px;font-weight:800;letter-spacing:.16em;color:#b49cb0;margin-top:5px}
+  .r-info{flex:1;min-width:0}
+  .r-tier{margin:0 0 8px;font-size:23px;font-weight:900;color:var(--accent);line-height:1.3}
+  .r-verdict{margin:0;font-size:13.5px;line-height:1.75;color:var(--ink-soft);font-weight:500}
+  .bars{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+  .bar-row{display:flex;flex-direction:column;gap:4px}
+  .bar-top{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#8d7992;font-weight:800}
+  .bar-top b{font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums}
+  .bar-track{height:9px;border-radius:999px;background:#f7eef3;border:1px solid rgba(59,42,63,.08);overflow:hidden}
+  .bar-fill{height:100%;width:0;border-radius:999px;transition:width .9s cubic-bezier(.16,1,.3,1)}
+  .note{
+    font-size:12px;line-height:1.7;color:#9b879e;font-weight:600;
+    background:#fff8fb;border:1.5px dashed #f0c9da;border-radius:12px;
+    padding:9px 12px;margin-bottom:18px;
+  }
+  .actions{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{
+    font:inherit;font-size:13px;font-weight:800;cursor:pointer;
+    padding:10px 16px;border-radius:12px;border:2px solid var(--ink);
+    background:#fff;color:var(--ink);box-shadow:3px 3px 0 rgba(59,42,63,.2);
+    transition:transform .12s, box-shadow .12s;
+  }
+  .btn:active{transform:translate(3px,3px);box-shadow:0 0 0 rgba(59,42,63,.2)}
+  .btn.share{background:linear-gradient(135deg,#ffb3cc,#ffc9e0)}
+  .btn.restart{background:#f3f0ff}
+
+  footer{margin-top:32px;text-align:center;font-size:11.5px;line-height:1.9;color:#b09cab;max-width:520px;font-weight:500}
+
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);
+    max-width:86vw;padding:11px 18px;border-radius:999px;text-align:center;
+    font-size:13px;font-weight:700;color:#fff;background:var(--ink);
+    box-shadow:4px 4px 0 rgba(59,42,63,.2);
+    opacity:0;pointer-events:none;z-index:200;
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  .toast.on{opacity:1;transform:translate(-50%,0)}
+
+  .hearts{position:fixed;inset:0;pointer-events:none;z-index:99;overflow:hidden}
+  .heart{position:absolute;bottom:-40px;opacity:0;animation:floatUp linear forwards;will-change:transform}
+  @keyframes floatUp{
+    0%{opacity:0;transform:translateY(0) rotate(0)}
+    12%{opacity:1}
+    100%{opacity:0;transform:translateY(-108vh) rotate(24deg)}
+  }
+
+  @media (max-width:560px){
+    body{padding:28px 13px 40px}
+    .card{padding:22px 18px;border-radius:24px;box-shadow:6px 8px 0 rgba(59,42,63,.12)}
+    .intro{padding:32px 20px}
+    .quiz{padding:22px 18px}
+    .q-text{font-size:18.5px;margin:18px 0 16px}
+    .opt{font-size:14px;padding:12px 13px;gap:11px}
+    .result{padding:22px 18px}
+    .r-main{flex-direction:column;gap:14px;text-align:center}
+    .gauge{width:170px;height:170px}
+    .r-info{text-align:center}
+    .actions{justify-content:center}
+    .q-tip{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+    .blob{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+
+<main>
+  <header>
+    <span class="sticker">FOR FUN · 纯属娱乐</span>
+    <h1>男娘指数检测器 <span class="emoji">🎀</span></h1>
+    <p class="sub">答题版 · 50 道选择题</p>
+  </header>
+
+  <section class="card intro" id="intro">
+    <span class="icon" aria-hidden="true">🎀</span>
+    <h2>凭直觉选，别想太久</h2>
+    <p>没有标准答案，选最接近你日常的那个。50 道题，大概 3 分钟。</p>
+    <div class="meta">
+      <span>50 道题</span><span>约 3 分钟</span><span>可回退修改</span>
+    </div>
+    <button class="big-btn" id="startBtn" type="button">开始答题</button>
+    <p class="tiny">不收集任何数据 · 答完即出分</p>
+  </section>
+
+  <section class="card quiz" id="quiz" hidden aria-live="polite">
+    <div class="q-top">
+      <button class="icon-btn" id="backBtn" type="button" aria-label="上一题" disabled>←</button>
+      <div class="q-count"><b id="qNum">1</b><span class="of"> / 50</span></div>
+      <div class="q-track"><i id="qBar"></i></div>
+    </div>
+    <h2 class="q-text" id="qText"></h2>
+    <div class="options" id="options"></div>
+    <p class="q-tip">按键盘 1–4 也可以选 · 选完自动下一题</p>
+  </section>
+
+  <section class="card result" id="result" hidden aria-live="polite">
+    <div class="r-head">
+      <span class="r-tag">检测报告</span>
+      <span class="r-date" id="rDate"></span>
+    </div>
+    <div class="r-main">
+      <div class="gauge">
+        <svg viewBox="0 0 260 260" aria-hidden="true">
+          <defs>
+            <linearGradient id="candy" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffa8c5"/>
+              <stop offset="45%" stop-color="#ff8fb1"/>
+              <stop offset="72%" stop-color="#c9a7ff"/>
+              <stop offset="100%" stop-color="#8fe3c8"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-dash" cx="130" cy="130" r="122"/>
+          <circle class="track" cx="130" cy="130" r="102"/>
+          <circle class="prog" id="prog" cx="130" cy="130" r="102" transform="rotate(-90 130 130)"/>
+        </svg>
+        <div class="gauge-center">
+          <div class="num" id="num">0</div>
+          <div class="num-sub">/ 100</div>
+        </div>
+      </div>
+      <div class="r-info">
+        <h2 class="r-tier" id="rTier"></h2>
+        <p class="r-verdict" id="rVerdict"></p>
+      </div>
+    </div>
+    <div class="bars" id="bars"></div>
+    <div class="note" id="note"></div>
+    <div class="actions">
+      <button class="btn share" id="shareBtn" type="button">分享结果</button>
+      <button class="btn" id="copyBtn" type="button">复制结果</button>
+      <button class="btn restart" id="restartBtn" type="button">重新测试</button>
+    </div>
+  </section>
+
+  <footer>
+    本测试纯属娱乐，题目与结果不构成任何判断。<br>
+    穿什么、怎么活，都是你自己的事 🎀
+  </footer>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="hearts" id="hearts" aria-hidden="true"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  var $ = function (s) { return document.querySelector(s); };
+
+  var intro   = $('#intro');
+  var quiz    = $('#quiz');
+  var result  = $('#result');
+  var startBtn= $('#startBtn');
+  var backBtn = $('#backBtn');
+  var qNum    = $('#qNum');
+  var qBar    = $('#qBar');
+  var qText   = $('#qText');
+  var options = $('#options');
+  var rDate   = $('#rDate');
+  var rTier   = $('#rTier');
+  var rVerdict= $('#rVerdict');
+  var barsEl  = $('#bars');
+  var noteEl  = $('#note');
+  var numEl   = $('#num');
+  var prog    = $('#prog');
+  var shareBtn= $('#shareBtn');
+  var copyBtn = $('#copyBtn');
+  var restartBtn = $('#restartBtn');
+  var toastEl = $('#toast');
+  var layer   = $('#hearts');
+
+  var TOTAL = 50;
+  var MAXP = 3;
+  var CIRC = 2 * Math.PI * 102;
+
+  /* ---------------- 题库 ---------------- */
+  var QDATA = [
+    { d:0, q:'早上起床后第一件事是？', o:[['洗把脸就出门',0],['先整理一下发型',1],['涂个防晒再走',2],['对着镜子说"今天也很可爱"',3]] },
+    { d:0, q:'出门前在镜子前会站多久？', o:[['30 秒，多一秒都亏',0],['两三分钟，看看就行',1],['十分钟，得调整到位',2],['二十分钟以上，仪态很重要',3]] },
+    { d:0, q:'你的衣柜主色调是？', o:[['黑白灰，安全',0],['蓝绿这类冷色',1],['米白、浅粉开始变多',2],['马卡龙色全家桶',3]] },
+    { d:0, q:'买衣服最先看什么？', o:[['耐不耐穿',0],['版型合不合身',1],['颜色衬不衬肤色',2],['穿上显不显可爱',3]] },
+    { d:0, q:'夏天出门你会？', o:[['短裤 T 恤，越快越好',0],['会稍微搭一下',1],['喷点香水再出门',2],['撑伞、防晒、补涂，一步不落',3]] },
+    { d:0, q:'你的袜子是哪种？', o:[['随手抓一双',0],['黑白基础款',1],['会跟衣服配个色',2],['有花边或者小图案',3]] },
+    { d:0, q:'鞋柜里最多的是？', o:[['运动鞋',0],['帆布鞋',1],['乐福鞋',2],['小皮鞋、玛丽珍',3]] },
+    { d:0, q:'朋友说你"今天穿得好像女孩子"，你会？', o:[['立刻反驳',0],['愣一下，不知道怎么接',1],['笑笑不说话',2],['"谢谢，我也觉得"',3]] },
+    { d:0, q:'你试过最大胆的穿搭是？', o:[['没有，基础款到底',0],['一件粉色单品',1],['短裤配长袜',2],['裙子（哪怕只是在家试试）',3]] },
+    { d:0, q:'拍照的时候你？', o:[['比个耶就完事',0],['会找找角度',1],['会摆侧脸',2],['会研究构图和光线',3]] },
+    { d:0, q:'自拍频率？', o:[['几乎不拍',0],['偶尔来一张',1],['一周好几次',2],['相册一半是自己',3]] },
+    { d:0, q:'手机里的修图软件？', o:[['没有',0],['一个，够用',1],['三四个换着用',2],['会员开到了明年',3]] },
+    { d:0, q:'出门必带的东西？', o:[['手机钥匙',0],['再加包纸巾',1],['润唇膏',2],['小镜子、护手霜、香水小样',3]] },
+
+    { d:1, q:'你的护肤步骤？', o:[['清水洗把脸',0],['洗面奶',1],['水乳安排上',2],['精华面膜一步不落',3]] },
+    { d:1, q:'指甲怎么处理？', o:[['剪短就行',0],['修整齐',1],['会涂透明护甲',2],['做过美甲，或者很想试',3]] },
+    { d:1, q:'关于香水？', o:[['不用',0],['偶尔喷一下',1],['有一瓶固定的',2],['分场合、分季节',3]] },
+    { d:1, q:'洗完澡之后？', o:[['擦干就睡',0],['涂个身体乳',1],['全套身体护理',2],['还要吹头发做造型',3]] },
+    { d:1, q:'你的护发产品？', o:[['洗发水',0],['加个护发素',1],['定期发膜',2],['精油、发膜、定型全套',3]] },
+    { d:1, q:'路过一面镜子，你会？', o:[['直接走过去',0],['瞄一眼',1],['顺手整理头发',2],['停下来看看今天的自己',3]] },
+    { d:1, q:'熬夜之后？', o:[['倒头就睡',0],['洗把脸',1],['敷个面膜补救',2],['再晚也要把护肤做完',3]] },
+    { d:1, q:'你的包里通常有？', o:[['空的，能装手机就行',0],['钱包钥匙',1],['纸巾湿巾',2],['一个补妆小包',3]] },
+    { d:1, q:'体毛管理？', o:[['完全不管',0],['偶尔修剪',1],['定期处理',2],['全套工具加脱毛仪',3]] },
+    { d:1, q:'嘴唇干了怎么办？', o:[['舔一下',0],['多喝水',1],['涂润唇膏',2],['润唇膏打底再上唇釉',3]] },
+    { d:1, q:'你对自己手的在意程度？', o:[['能打游戏就行',0],['剪干净',1],['会涂护手霜',2],['会修甲型、护理指缘',3]] },
+    { d:1, q:'洗脸用什麼水？', o:[['随便，能洗就行',0],['温水',1],['温水加洗脸巾',2],['还要用洁面仪',3]] },
+    { d:1, q:'你房间里有几面镜子？', o:[['没有',0],['卫生间一面',1],['房间还有一面小的',2],['还有带补光的',3]] },
+
+    { d:2, q:'有人说你声音很软，你会？', o:[['不可能，绝对不可能',0],['偶尔被这么说',1],['经常被这么说',2],['已经会故意再软一点',3]] },
+    { d:2, q:'你说话句尾？', o:[['干脆利落',0],['正常',1],['偶尔带点语气词',2],['"嘛""呀""啦"三连',3]] },
+    { d:2, q:'走路姿势？', o:[['大步流星',0],['正常走',1],['会注意仪态',2],['被说过"走路挺好看"',3]] },
+    { d:2, q:'坐着的时候？', o:[['怎么舒服怎么来',0],['会稍微注意',1],['习惯并腿',2],['并腿、手放好、背挺直',3]] },
+    { d:2, q:'笑的时候？', o:[['哈哈哈，毫不收敛',0],['正常笑',1],['会下意识捂嘴',2],['被说过"笑得好甜"',3]] },
+    { d:2, q:'别人夸你可爱？', o:[['有点尴尬',0],['说声谢谢',1],['心里有点开心',2],['能记一整天',3]] },
+    { d:2, q:'被叫"小朋友"？', o:[['立刻纠正',0],['无所谓',1],['有点受用',2],['会顺着撒个娇',3]] },
+    { d:2, q:'你的表情包风格？', o:[['熊猫头',0],['猫猫狗狗',1],['可爱小女孩',2],['全是粉红系',3]] },
+    { d:2, q:'生气的时候？', o:[['直接说出来',0],['冷脸',1],['嘟嘴',2],['会跺脚或者小声抱怨',3]] },
+    { d:2, q:'拍照时的表情？', o:[['严肃',0],['微笑',1],['会卖个萌',2],['会嘟嘴比心',3]] },
+    { d:2, q:'你的社交头像？', o:[['风景',0],['自己的照片',1],['可爱插画',2],['粉色系加滤镜',3]] },
+    { d:2, q:'说话时的手部动作？', o:[['基本不动',0],['正常手势',1],['会有点小动作',2],['被说过"手势好多"',3]] },
+
+    { d:3, q:'你喜欢的东西？', o:[['车、球鞋',0],['游戏',1],['可爱的小物件',2],['玩偶、盲盒、毛绒',3]] },
+    { d:3, q:'关于甜品？', o:[['不太爱',0],['偶尔吃',1],['喜欢',2],['会为限定款排队',3]] },
+    { d:3, q:'看剧的时候？', o:[['只看剧情',0],['主要看脸',1],['会磕 CP',2],['会为角色哭',3]] },
+    { d:3, q:'收到花？', o:[['觉得没必要',0],['会开心',1],['会拍照',2],['会插起来养着',3]] },
+    { d:3, q:'你的房间？', o:[['能住就行',0],['干净整齐',1],['有一些装饰',2],['香薰、灯串、玩偶齐全',3]] },
+    { d:3, q:'选手机壳？', o:[['能用就行',0],['纯色',1],['有图案',2],['可爱款加挂绳加贴纸',3]] },
+    { d:3, q:'生日愿望更接近？', o:[['实用一点',0],['直接给钱',1],['想要的东西',2],['被认真对待',3]] },
+    { d:3, q:'遇到喜欢的人？', o:[['直接说',0],['疯狂暗示',1],['会紧张到说不出话',2],['会想变得可爱一点',3]] },
+    { d:3, q:'你的歌单？', o:[['摇滚',0],['流行',1],['甜甜的歌',2],['日系可爱系',3]] },
+    { d:3, q:'看恋爱综艺？', o:[['不看',0],['陪着看',1],['会分析嘉宾',2],['会代入自己',3]] },
+    { d:3, q:'最想收到的礼物？', o:[['电子产品',0],['衣服',1],['香水',2],['一条裙子或者一只玩偶',3]] },
+    { d:3, q:'如果有人说"你好像女孩子"，你心里？', o:[['不可能',0],['有点在意',1],['偷偷开心',2],['还想再听一遍',3]] }
+  ];
+
+  var DIMS = [
+    { key: 0, label: '穿搭审美', color: 'linear-gradient(90deg,#ffc2d6,#ff8fb1)' },
+    { key: 1, label: '精致程度', color: 'linear-gradient(90deg,#ffd0a8,#ffa8c5)' },
+    { key: 2, label: '氛围气质', color: 'linear-gradient(90deg,#cfc2ff,#b7a6ff)' },
+    { key: 3, label: '心态表达', color: 'linear-gradient(90deg,#a8ecdd,#8fe3c8)' }
+  ];
+
+  var TIERS = [
+    { min: 1,  max: 10,  name: '纯正硬汉', emoji: '🧢', color: '#6f8fb8',
+      desc: '50 道题答完，检测仪沉默了三秒，然后说：兄弟，你还是去打球吧。' },
+    { min: 11, max: 25,  name: '清爽少年', emoji: '🍃', color: '#5fae8c',
+      desc: '干净利落，被夸可爱会脸红三秒，然后假装没听见。' },
+    { min: 26, max: 40,  name: '氛围感男大', emoji: '🎧', color: '#6aa9a0',
+      desc: '穿搭开始有想法，拍照会找角度，但嘴上还说"随便穿穿"。' },
+    { min: 41, max: 55,  name: '微甜预警', emoji: '🍬', color: '#e095b3',
+      desc: '甜度刚好卡在临界点，再往前一步就是另一片天地。' },
+    { min: 56, max: 70,  name: '甜度超标', emoji: '🎀', color: '#ea7fa8',
+      desc: '你的衣柜里已经有粉色单品了，而且你很清楚哪件最显白。' },
+    { min: 71, max: 85,  name: '女装预备役', emoji: '👗', color: '#a888e8',
+      desc: '尺码量好了，购物车躺着一条裙子，就差一个合适的理由。' },
+    { min: 86, max: 95,  name: '男娘本娘', emoji: '💅', color: '#ff7da4',
+      desc: '走在路上会被要链接，性别成谜，回头率稳定在百分之百。' },
+    { min: 96, max: 100, name: '传说级男娘', emoji: '👑', color: '#e8a72c',
+      desc: '检测仪当场跪下，并小心翼翼地问能不能合个影。' }
+  ];
+
+  var QUIPS = [
+    '这份结果只有你和这台机器知道。',
+    '建议截图，但不建议发给老板。',
+    '分数只是玩笑，衣柜才是真的。',
+    '如果结果偏高，说明你很有品味。',
+    '如果结果偏低，说明你藏得很深。',
+    '本报告不提供任何购物建议（但你可以自己想想）。'
+  ];
+
+  /* ---------------- 工具 ---------------- */
+  function seeded(seed) {
+    return function () {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  var rand = seeded(20261103);
+
+  // 选项顺序打乱一次，避免"越往下分越高"的规律
+  QDATA.forEach(function (item) {
+    var arr = item.o.slice();
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(rand() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    item.opts = arr;
+  });
+
+  var answers = new Array(TOTAL).fill(null);
+  var idx = 0;
+  var locked = false;
+  var current = 'intro';
+
+  function show(name) {
+    current = name;
+    intro.hidden = name !== 'intro';
+    quiz.hidden = name !== 'quiz';
+    result.hidden = name !== 'result';
+  }
+
+  /* ---------------- 答题 ---------------- */
+  function renderQuestion() {
+    var item = QDATA[idx];
+    qNum.textContent = idx + 1;
+    qBar.style.width = ((idx + 1) / TOTAL * 100) + '%';
+    qText.textContent = item.q;
+    backBtn.disabled = idx === 0;
+
+    options.textContent = '';
+    item.opts.forEach(function (opt, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'opt' + (answers[idx] === i ? ' picked' : '');
+      b.dataset.i = i;
+
+      var k = document.createElement('span');
+      k.className = 'key';
+      k.textContent = 'ABCD'[i];
+
+      var t = document.createElement('span');
+      t.className = 'txt';
+      t.textContent = opt[0];
+
+      b.appendChild(k);
+      b.appendChild(t);
+      b.addEventListener('click', function () { choose(i); });
+      options.appendChild(b);
+    });
+  }
+
+  function choose(i) {
+    if (locked || current !== 'quiz') return;
+    answers[idx] = i;
+    locked = true;
+
+    var btns = options.querySelectorAll('.opt');
+    btns.forEach(function (b, k) { b.classList.toggle('picked', k === i); });
+
+    setTimeout(function () {
+      if (idx === TOTAL - 1) {
+        locked = false;
+        finish();
+      } else {
+        idx++;
+        locked = false;
+        renderQuestion();
+      }
+    }, 220);
+  }
+
+  function goBack() {
+    if (locked) return;
+    if (idx > 0) {
+      idx--;
+      renderQuestion();
+    }
+  }
+
+  /* ---------------- 计分 ---------------- */
+  function compute() {
+    var total = 0;
+    var dimSum = [0, 0, 0, 0];
+    var dimMax = [0, 0, 0, 0];
+
+    QDATA.forEach(function (item, i) {
+      var a = answers[i];
+      var p = (a === null) ? 0 : item.opts[a][1];
+      total += p;
+      dimSum[item.d] += p;
+      dimMax[item.d] += MAXP;
+    });
+
+    var score = Math.max(1, Math.min(100, Math.round(total / (TOTAL * MAXP) * 100)));
+    var dims = DIMS.map(function (d) {
+      var raw = Math.round(dimSum[d.key] / dimMax[d.key] * 100);
+      return { label: d.label, color: d.color, val: Math.max(1, Math.min(100, raw)) };
+    });
+    return { score: score, dims: dims };
+  }
+
+  function tierOf(score) {
+    for (var i = 0; i < TIERS.length; i++) {
+      if (score >= TIERS[i].min && score <= TIERS[i].max) return TIERS[i];
+    }
+    return TIERS[TIERS.length - 1];
+  }
+
+  function finish() {
+    var r = compute();
+    var score = r.score;
+    var tier = tierOf(score);
+
+    document.documentElement.style.setProperty('--accent', tier.color);
+
+    var d = new Date();
+    rDate.textContent = d.getFullYear() + '.' +
+      String(d.getMonth() + 1).padStart(2, '0') + '.' +
+      String(d.getDate()).padStart(2, '0');
+
+    rTier.textContent = tier.emoji + ' ' + tier.name;
+    rVerdict.textContent = '50 道题答完，你的男娘指数是 ' + score + '/100。' + tier.desc;
+
+    // 强弱项
+    var sorted = r.dims.slice().sort(function (a, b) { return b.val - a.val; });
+    var best = sorted[0], worst = sorted[sorted.length - 1];
+    var quip = QUIPS[Math.floor(Math.random() * QUIPS.length)];
+    if (best.val - worst.val <= 6) {
+      var span = best.val === worst.val
+        ? (worst.val + ' 分')
+        : (worst.val + '–' + best.val + ' 分');
+      noteEl.textContent = '四个维度都在 ' + span + '，发展得相当均衡。' + quip;
+    } else {
+      noteEl.textContent = '最强项「' + best.label + '」' + best.val + ' 分，最需要补课「' +
+        worst.label + '」' + worst.val + ' 分。' + quip;
+    }
+
+    barsEl.textContent = '';
+    r.dims.forEach(function (dim, i) {
+      var row = document.createElement('div');
+      row.className = 'bar-row';
+      var top = document.createElement('div');
+      top.className = 'bar-top';
+      var l = document.createElement('span');
+      l.textContent = dim.label;
+      var b = document.createElement('b');
+      b.textContent = dim.val;
+      top.appendChild(l); top.appendChild(b);
+      var track = document.createElement('div');
+      track.className = 'bar-track';
+      var fill = document.createElement('div');
+      fill.className = 'bar-fill';
+      fill.style.background = dim.color;
+      track.appendChild(fill);
+      row.appendChild(top); row.appendChild(track);
+      barsEl.appendChild(row);
+      setTimeout(function () { fill.style.width = dim.val + '%'; }, 100 + i * 90);
+    });
+
+    result.classList.add('in');
+    show('result');
+    setRing(score);
+    countTo(numEl, score, 900);
+    hearts(score);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  var lastResult = null;
+
+  /* ---------------- 动画 ---------------- */
+  var raf = window.requestAnimationFrame || function (f) { return setTimeout(f, 16); };
+  var numGen = 0;
+  var REDUCE = false;
+  try { REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  function countTo(el, target, duration) {
+    var gen = ++numGen;
+    if (REDUCE) { el.textContent = target; return; }
+    var t0 = null;
+    function step(t) {
+      if (gen !== numGen) return;
+      if (t0 === null) t0 = t;
+      var p = Math.min(1, (t - t0) / duration);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased);
+      if (p < 1) raf(step); else el.textContent = target;
+    }
+    el.textContent = '0';
+    raf(step);
+  }
+
+  function setRing(score) {
+    var offset = CIRC * (1 - score / 100);
+    prog.style.strokeDasharray = CIRC;
+    prog.style.strokeDashoffset = CIRC;
+    void prog.getBoundingClientRect();
+    if (REDUCE) { prog.style.strokeDashoffset = offset; return; }
+    raf(function () {
+      raf(function () { prog.style.strokeDashoffset = offset; });
+    });
+  }
+
+  function hearts(score) {
+    if (REDUCE) return;
+    var glyphs = ['💗', '💖', '♡', '🎀', '✨'];
+    var count = 8 + Math.round(score * 0.14);
+    for (var i = 0; i < count; i++) {
+      var h = document.createElement('span');
+      h.className = 'heart';
+      h.textContent = glyphs[(Math.random() * glyphs.length) | 0];
+      h.style.left = (Math.random() * 100) + 'vw';
+      h.style.fontSize = (13 + Math.random() * 16) + 'px';
+      h.style.animationDuration = (2.4 + Math.random() * 1.7) + 's';
+      h.style.animationDelay = (Math.random() * 0.5) + 's';
+      layer.appendChild(h);
+      (function (node) { setTimeout(function () { node.remove(); }, 5000); })(h);
+    }
+  }
+
+  /* ---------------- 分享 / 复制 ---------------- */
+  var toastTimer = 0;
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove('on'); }, 2400);
+  }
+
+  function copyText(text, okMsg) {
+    function ok() { showToast(okMsg || '已复制'); }
+    function feedback() {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;top:-999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();
+        var done = document.execCommand('copy');
+        ta.remove();
+        if (done) ok(); else showToast('复制失败，请手动选择文字');
+      } catch (e) { showToast('复制失败'); }
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok, feedback);
+    } else {
+      feedback();
+    }
+  }
+
+  function reportText() {
+    var r = compute();
+    var tier = tierOf(r.score);
+    var lines = r.dims.map(function (d) { return d.label + ' ' + d.val; }).join(' / ');
+    return '🎀 男娘指数检测报告（50 题版）\n得分：' + r.score + ' / 100\n评级：' +
+      tier.emoji + ' ' + tier.name + '\n维度：' + lines + '\n\n—— 纯属娱乐 🎀';
+  }
+
+  /* ---------------- 事件 ---------------- */
+  startBtn.addEventListener('click', function () {
+    idx = 0;
+    answers = new Array(TOTAL).fill(null);
+    locked = false;
+    show('quiz');
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  backBtn.addEventListener('click', goBack);
+
+  restartBtn.addEventListener('click', function () {
+    idx = 0;
+    answers = new Array(TOTAL).fill(null);
+    locked = false;
+    result.classList.remove('in');
+    show('intro');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  copyBtn.addEventListener('click', function () {
+    copyText(reportText(), '结果已复制');
+  });
+
+  shareBtn.addEventListener('click', function () {
+    var r = compute();
+    var tier = tierOf(r.score);
+    var hosted = location.protocol === 'http:' || location.protocol === 'https:';
+    var link = hosted ? location.origin + location.pathname : '';
+    var line = '我的男娘指数是 ' + r.score + '/100 —— ' + tier.emoji + ' ' + tier.name + ' 🎀';
+    var payload = line + (link ? '\n来测测你的：' + link : '');
+
+    if (hosted && navigator.share) {
+      navigator.share({ title: '男娘指数检测器 · 答题版', text: line, url: link }).catch(function (err) {
+        if (err && err.name === 'AbortError') return;
+        copyText(payload, '链接已复制');
+      });
+      return;
+    }
+    if (link) copyText(payload, '链接已复制，去粘贴吧');
+    else copyText(payload, '已复制结果；发布到网上后就能分享链接');
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (current !== 'quiz' || locked) return;
+    if (e.key >= '1' && e.key <= '4') {
+      var i = Number(e.key) - 1;
+      if (i < 4) choose(i);
+    } else if (e.key === 'ArrowLeft') {
+      goBack();
+    }
+  });
+
+  /* ---------------- 初始化 ---------------- */
+  show('intro');
+  setRing(0);
+})();
+</script>
+</body>
+</html>
